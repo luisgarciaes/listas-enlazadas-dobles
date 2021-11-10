@@ -58,15 +58,19 @@ class Inventory{
     }
     return undefined;
   }
-  print() {
-    let current = this.head;
-    while (current) {
-      console.log(
-        `${current.previous?.value} ${current.value} ${current.next?.value}`
-      );
-      current = current.next;
+  search(x) {
+    var temp = this.head;
+    var pos = 0;
+
+    while (temp.value != x && temp.next != null) {
+        pos++;
+        temp = temp.next;
     }
-  }
+
+    if (temp.value != x)
+        return -1;
+    return (pos + 1);
+}
 
   insertAtHead(value) {
     this.length++;
@@ -151,7 +155,7 @@ class Inventory{
     else{
       for(current = this.head; current.next != null; current = current.next){
         for(index = current.next; index != null; index = index.next){
-          if(current.value > index.value) {  
+          if(current.value._id > index.value._id) {  
             temp = current.value;  
             current.value = index.value;  
             index.value = temp;  
@@ -168,7 +172,7 @@ class Inventory{
         return;  
     }  
     while(current != null) {  
-        console.log(current.value + " ");  
+        console.log(current.value.info());  
         current = current.next;  
     }
   }
@@ -179,24 +183,29 @@ class Inventory{
         return;  
     }  
     while(current != null) {  
-        console.log(current.value + " ");  
+        console.log(current.value.info());  
         current = current.previous;  
     }
   }
 
 }
-
-const test = new Inventory();
-  
-test.insert(2);
-test.insert(1);
-test.insert(10);
-test.insert(8);
-test.insert(7);
-test.display();
+let i=new Inventory();
+let p1=new Product(8,1,1,1,1);
+i.insert(p1);
+p1=new Product(7,1,1,1,1);
+i.insert(p1);
+p1=new Product(5,3,3,3,3);
+i.insert(p1);
+p1=new Product(4,1,1,1,1);
+i.insert(p1);
+p1=new Product(3,1,1,1,1);
+i.insert(p1);
+p1=new Product(10,1,1,1,1);
+i.insert(p1); 
+i.display();
 console.log("------------------------------")
-test.sortList()
-test.display()
+i.sortList()
+i.display()
 
 
 /*
