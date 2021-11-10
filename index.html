@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <h2>Changelog</h2>  
+    <p id="changelog">.</p>
+    <h2>Add products </h2>
+      <div class="content-info">
+        <form id ="form1">
+          <div class="field">
+            <label>ID:*</label>
+            <input id="id" type="text" size=35 required>
+            <br>
+            <label>Name:*</label>
+            <input id="name" type="text" size=35 required>
+            <br>
+            <label>Units:*</label>
+            <input id="units" type="text" size=35 required>
+            <br>
+            <label>Cost:*</label>
+            <input id="cost" type="text" size=35 required>
+            <br>
+            <label>Position:</label>
+            <input id="position" type="text" size=35>
+            <br>
+          </div>
+          <div class="field">
+            <br>
+        </form>
+        
+            <button id="btnAdd" type="button" value="Agregar producto">Add</button> 
+            <p>* Required</p>
+            <p>If a position is not specified, the product will be added at the end of the list.</p>
+            <br>
+            <br>
+            <h2>Other</h2>
+            <form id="form2">
+            <label>ID:</label>
+            <input id="findRemove" type="text" size=35 required>
+            <br>
+            <br>
+            </form >
+            <br>
+            <button id="btnRemove" type="button" value="Eliminar producto">Remove</button> 
+            <button id="btnFind" type="button" value="Buscar producto">Find</button> 
+            <br>
+            <br>
+            <br>
+            <button id="btnReturn" type="button" value="Recuperar productos">Return product list</button> 
+            <button id="btnReturnReverse" type="button" value="Recuperar producto inverso">Return reverse product list</button> 
+          </div>
+
+        
+      </div>
+    
+      <script src="main.js"></script> 
+</body>
+</html>
