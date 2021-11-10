@@ -172,8 +172,20 @@ class Inventory{
         current = current.next;  
     }
   }
+  displayReverse(){  
+    let current = this.tail;  
+    if(this.head == null) {  
+        console.log("List is empty");  
+        return;  
+    }  
+    while(current != null) {  
+        console.log(current.value + " ");  
+        current = current.previous;  
+    }
+  }
 
 }
+
 const test = new Inventory();
   
 test.insert(2);
