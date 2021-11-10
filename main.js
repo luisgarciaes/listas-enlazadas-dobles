@@ -14,101 +14,28 @@ class Product{
     
 }
 class Inventory{
-    constructor(){
-        this.start=null;
-    }
-    add(x){
-        if(this.start==null){this.start=x;}
-        else{this._add(x,this.start)}
-    }
-    _add(x,y){
-        if(y.next==null){y.next=x}
-        else{this._add(x,y.next)}
-    }
-    _addN(x,position){
-        if(this.start==null){
-            if (position!=0) {
-                return;
-            }
-        }
-        if (this.start != null && position == 0) {
-            x.next = this.start;
-            this.start = x;
-            return;
-          }
-          let current = this.start;
-          let previous = null;
-          let i = 0;
-          while (i < position) {
-            previous = current;
-            current = current.next;
-            if (current == null) {
-              break;
-            }
-             i++;
-            }
-            x.next = current;
-            previous.next = x;
-            
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+  insert(value) {
+    this.length++;
+    let newNode = createNode(value);
+
+    if (this.tail) {
+      this.tail.next = newNode;
+      newNode.previous = this.tail;
+      this.tail = newNode;
+      return newNode;
     }
 
-    list(){
-        let x = '';
-        let temp=this.start;
-        while (temp!=null){
-          x += temp.info() + "\n"
-          temp=temp.next;
-        }
-        return x;
-    }
-    listRev(){
-        let x='';
-        let temp=this.start;
-        while (temp!=null){
-          x = temp.info() + "\n" + x
-          temp=temp.next;
-        }
-        return x;
-      }
-    find(id){
-        if (!this.start)
-          return null;
-        let aux=this.start;
-        while(aux!=null){
-          if (aux._id==id)
-            return aux;
-          aux=aux.next;
-        }
-        return null;
-      }
-    delete(id){
-        let deleted=null;
-        if (!this.start)
-          return null;
-        if (this.start._id==id){
-          deleted=this.start;
-          this.start=this.start.next;
-          return deleted;
-        } else {
-          let x=this.start;
-          let y=this.start.next;
-          while(y!=null){
-            if (y._id==id){
-              x.next=x.next.next;
-              deleted=y;
-              deleted.next=null;
-              return deleted;
-            } else {
-              x=y;
-              y=y.next;
-            }
-          }
-          return null;
-        }
-      }
-
+    this.head = this.tail = newNode;
+    return newNode;
+  }
 
 }
+/*
 class App{
     constructor(){
     this._inventory = new Inventory()
@@ -227,6 +154,3 @@ p1=new Product(7,1,1,1,1);
 i.add(p1);
 console.log(i.list());
 console.log(i.find(4));*/
-
-
-new App;
