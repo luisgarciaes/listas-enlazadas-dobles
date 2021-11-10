@@ -221,25 +221,33 @@ findByPosition(x){ // terrible pero funciona
   }
   display(){  
     let current = this.head;  
-    if(this.head == null) {  
-        console.log("List is empty");  
-        return;  
+    let string = "";
+    let consoleString = "";
+    if(this.head == null) {   
+        return null;  
     }  
     while(current != null) {  
-        console.log(current.value.info());  
+        string += current.value.info()+"<br>" 
+        consoleString += current.value.info() + "\n"
         current = current.next;  
     }
+    console.log(consoleString)
+    return string;
   }
   displayReverse(){  
     let current = this.tail;  
+    let string = "";
+    let consoleString = "";
     if(this.head == null) {  
-        console.log("List is empty");  
-        return;  
+        return null;  
     }  
     while(current != null) {  
-        console.log(current.value.info());  
+        string += current.value.info()+"<br>" 
+        consoleString += current.value.info() + "\n"
         current = current.previous;  
     }
+    console.log(consoleString)
+    return string
   }
 
 }
@@ -260,7 +268,6 @@ class App{
     let btnReturnReverse = document.querySelector("#btnReturnReverse");
     btnReturnReverse.addEventListener("click", this._returnReverseInventory);
     let test = document.querySelector("#test");
-    test.addEventListener("click", this.test);
     
     
     }
@@ -271,54 +278,27 @@ class App{
     _returnInventory = () =>{
       let consoleText = document.getElementById("changelog")
         this._inventory.sortList();
-        this._inventory.display();
+        if(this._inventory.display() === null){
+          console.log("The inventory is empty.")
+          consoleText.innerHTML = "The inventory is empty.";
+          return
+        }
         consoleText.innerHTML = this._inventory.display();
+        
     }
     _returnReverseInventory = () =>{
+
       let consoleText = document.getElementById("changelog")
-      this._inventory.displayReverse()
-      consoleText.innerHTML = this._inventory.displayReverse();
+        this._inventory.sortList();
+        if(this._inventory.displayReverse() === null){
+          console.log("The inventory is empty.")
+          consoleText.innerHTML = "The inventory is empty.";
+          return
+        }
+        consoleText.innerHTML = this._inventory.displayReverse();
         
     }
-    test = () =>{
-  
-        this._inventory.insert(new Product(2,"Cola",1,12))
-  
 
-        this._inventory.insert(new Product(1,"Banana",5,2))
-
-
-        this._inventory.insert(new Product(6,"Patata",10,3))
-
-
-        this._inventory.insert(new Product(5,"Manzana",2,2))
-
-
-        this._inventory.insert(new Product(4,"Pera",5,2))
-  
-
-        this._inventory.insert(new Product(7,"Zapato",2,100))
-        this._inventory.insert(new Product(3,"Zapato",2,100))
-        this._inventory.insert(new Product(8,"Zapato",2,100))
-        this._inventory.insert(new Product(9,"Zapato",2,100))
-        this._inventory.insert(new Product(10,"Zapato",2,100))
-        this._inventory.insert(new Product(11,"Zapato",2,100))
-        this._inventory.insert(new Product(12,"Zapato",2,100))
-        this._inventory.insert(new Product(13,"Zapato",2,100))
-        this._inventory.insert(new Product(14,"Zapato",2,100))
-        this._inventory.insert(new Product(15,"Zapato",2,100))
-        this._inventory.insert(new Product(16,"Zapato",2,100))
-        this._inventory.insert(new Product(17,"Zapato",2,100))
-        this._inventory.insert(new Product(18,"Zapato",2,100))
-        this._inventory.insert(new Product(19,"Zapato",2,100))
-
-
-        
-
-
-        
-    }
-    
     _addProduct = () => {
       let consoleText = document.getElementById("changelog")
       let form =  document.getElementById("form1")
