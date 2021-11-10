@@ -59,18 +59,29 @@ class Inventory{
     return undefined;
   }
   search(x) {
-    var temp = this.head;
-    var pos = 0;
+    let temp = this.head;
+    let pos = 0;
 
-    while (temp.value != x && temp.next != null) {
+    while (temp.value._id != x && temp.next != null) {
         pos++;
         temp = temp.next;
     }
 
-    if (temp.value != x)
+    if (temp.value._id != x)
         return -1;
-    return (pos + 1);
+    return (pos);
 }
+productAtPosition(x){ // terrible pero funciona
+  let temp = this.head;
+  let i = 1;
+  while (i != x && temp.next != null) {
+    temp = temp.next
+    i++
+  }
+  if (i != x)
+      return -1;
+  return (temp);
+  }
 
   insertAtHead(value) {
     this.length++;
@@ -126,11 +137,23 @@ class Inventory{
     }
     const previousNode = currentNode.previous;
     const nextNode = currentNode.next;
+    if(previousNode === null && nextNode === null){
+      return -1;
+    }
     previousNode.next = nextNode;
     nextNode.previous = previousNode;
     return currentNode;
   }
-  removeHead() {
+  removeById(x){
+    let removed = x
+    let y = this.search(x);
+    if ((y === -1)) {
+      return null;
+    }
+    this.removeAtIndex(y);
+    return console.log(removed);
+  }
+  removeAtHead() {
     if (this.head) {
       this.length--;
       const removedHead = this.head;
