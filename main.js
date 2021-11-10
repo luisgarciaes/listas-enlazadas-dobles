@@ -51,6 +51,53 @@ class Inventory{
     }
     return undefined;
   }
+  print() {
+    let current = this.head;
+    while (current) {
+      console.log(
+        `${current.previous?.value} ${current.value} ${current.next?.value}`
+      );
+      current = current.next;
+    }
+  }
+
+  insertHead(value) {
+    this.length++;
+    let newNode = createNode(value);
+
+    if (this.head) {
+      this.head.previous = newNode;
+      newNode.next = this.head;
+      this.head = newNode;
+      return newNode;
+    }
+
+    this.head = this.tail = newNode;
+    return newNode;
+  }
+  
+  insertIndex(value, index) {
+    if (index >= this.length) {
+      throw new Error("Insert index out of bounds");
+    }
+
+    if (index === 0) {
+      return this.insertHead(value);
+    }
+
+    this.length++;
+    let currentNode = this.head;
+    for (let i = 0; i < index; i++) {
+      currentNode = currentNode.next;
+    }
+    const previousNode = currentNode.previous;
+    const newNode = createNode(value);
+    newNode.next = currentNode;
+    newNode.previous = previousNode;
+    previousNode.next = newNode;
+    currentNode.previous = newNode;
+    return newNode;
+  }
 
 }
 
