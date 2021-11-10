@@ -72,11 +72,11 @@ class Inventory{
     return (pos+1);
 }
 findById(x) {
+  if (this.head == null) {
+    return -1;
+  }
   let temp = this.head;
-  let pos = 0;
-
   while (temp.value._id != x && temp.next != null) {
-      pos++;
       temp = temp.next;
   }
 
@@ -225,6 +225,7 @@ findByPosition(x){ // terrible pero funciona
   }
 
 }
+/*
 let i=new Inventory();
 let p1=new Product(8,1,1,1,1);
 i.insert(p1);
@@ -242,9 +243,9 @@ i.display();
 console.log("------------------------------")
 i.sortList()
 i.display()
+*/
 
 
-/*
 class App{
     constructor(){
     this._inventory = new Inventory()
@@ -259,6 +260,8 @@ class App{
     btnReturn.addEventListener("click", this._returnInventory);
     let btnReturnReverse = document.querySelector("#btnReturnReverse");
     btnReturnReverse.addEventListener("click", this._returnReverseInventory);
+    let test = document.querySelector("#test");
+    test.addEventListener("click", this.test);
     
     
     }
@@ -267,15 +270,27 @@ class App{
         y.value = x;
     }
     _returnInventory = () =>{
-        console.log(this._inventory.print())
-        
+        this._inventory.sortList();
+        this._inventory.display();
     }
     _returnReverseInventory = () =>{
-        console.log(this._inventory.print())
+      this._inventory.displayReverse()
         
     }
     test = () =>{
-        console.log(this._inventory)
+      
+        this._inventory.insert(new Product(2,1,1,1,1))
+
+        this._inventory.insert(new Product(1,1,1,1,1))
+
+        this._inventory.insert(new Product(8,1,1,1,1))
+
+        this._inventory.insert(new Product(7,1,1,1,1))
+
+        this._inventory.insert(new Product(6,1,1,1,1))
+
+        this._inventory.insert(new Product(4,1,1,1,1))
+
         
     }
     
@@ -284,33 +299,17 @@ class App{
         let form =  document.getElementById("form1")
         let product = new Product(document.getElementById("id").value,document.getElementById("name").value
         ,document.getElementById("units").value,document.getElementById("cost").value);
-        let position = document.getElementById("position").value;
-        let y = this._inventory.find(product._id)
-        
-        if (y == null) {
-            console.log(position)
-            console.log(y)
-            if(position == ""){
-                this._inventory.add(product);
-                console.log("The product '" + product.info() + "' has been added.");
-                consoleText.innerHTML ="The product '" + product.info() + "' has been added.";
-                form.reset();
+        let y = this._inventory.findById(product._id)
 
-            }else{
-                this._inventory._addN(product,position)
+        if (y === -1) { 
+                this._inventory.insert(product)
                 console.log("The product '" + product.info() + "' has been added.")
                 consoleText.innerHTML ="The product '" + product.info() + "' has been added."
-                form.reset()
-                
-            }
+                form.reset() 
         }else{
             console.log("The product '" + product.info() + "' already exists in the inventory.")
             consoleText.innerHTML ="The product '" + product.info() + "' already exists in the inventory."
         }
-
-       
-        //this.consoleText.innerHTML =product,1)
-
     }
     
 
@@ -333,14 +332,14 @@ class App{
     _findProduct = () => {
         let consoleText = document.getElementById("changelog")
         let x = document.getElementById("findRemove").value;
-        let y = this._inventory.find(x)
-        if (y == null) {
+        let y = this._inventory.findById(x)
+        if (y == -1) {
             console.log("The product with the ID '" + x + "' does not exist.")
             consoleText.innerHTML ="The product with the ID '" + x + "' does not exist."
             
         }else{
-            console.log(y.info())
-            consoleText.innerHTML = y.info()
+            console.log(y.value.info())
+            consoleText.innerHTML = y.value.info()
         }
 
     };
@@ -348,18 +347,7 @@ class App{
 
 }
 
-/*let i=new Inventory();
-let p1=new Product(1,1,1,1,1);
-i.add(p1);
-p1=new Product(2,1,1,1,1);
-i.add(p1);
-p1=new Product(3,3,3,3,3);
-i.add(p1);
-p1=new Product(4,1,1,1,1);
-i.add(p1);
-p1=new Product(5,1,1,1,1);
-i.add(p1);
-p1=new Product(7,1,1,1,1);
-i.add(p1);
-console.log(i.list());
-console.log(i.find(4));*/
+
+new App;
+
+
