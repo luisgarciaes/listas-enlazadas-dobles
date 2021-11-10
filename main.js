@@ -1,4 +1,11 @@
 
+const createNode = (value) => {
+  return {
+    value: value,
+    next: null,
+    previous: null,
+  };
+}
 class Product{
     constructor(id,name,units,cost){
         this._id = id;
@@ -61,7 +68,7 @@ class Inventory{
     }
   }
 
-  insertHead(value) {
+  insertAtHead(value) {
     this.length++;
     let newNode = createNode(value);
 
@@ -78,11 +85,11 @@ class Inventory{
 
   insertIndex(value, index) {
     if (index >= this.length) {
-      throw new Error("Insert index out of bounds");
+      console.log("Insert index out of bounds");
     }
 
     if (index === 0) {
-      return this.insertHead(value);
+      return this.insertAtHead(value);
     }
 
     this.length++;
@@ -98,14 +105,14 @@ class Inventory{
     currentNode.previous = newNode;
     return newNode;
   }
-  
-  removeIndex(index) {
+
+  removeAtIndex(index) {
     if (index >= this.length) {
-      throw new Error("Remove index out of bounds");
+      console.log("Remove index out of bounds");
     }
 
     if (index === 0) {
-      return this.removeHead();
+      return this.removeAtHead();
     }
 
     this.length--;
@@ -119,8 +126,66 @@ class Inventory{
     nextNode.previous = previousNode;
     return currentNode;
   }
+  removeHead() {
+    if (this.head) {
+      this.length--;
+      const removedHead = this.head;
+      this.head = this.head.next;
+      if (this.head) {
+        this.head.previous = null;
+      } else {
+        this.tail = null;
+      }
+      return removedHead;
+    }
+    return undefined;
+  }
+  sortList(){
+    let current = null;
+    let index = null;
+    let temp;
+    if (this.head == null) {
+      return
+      
+    }
+    else{
+      for(current = this.head; current.next != null; current = current.next){
+        for(index = current.next; index != null; index = index.next){
+          if(current.value > index.value) {  
+            temp = current.value;  
+            current.value = index.value;  
+            index.value = temp;  
+        }  
+        }
+      }
+    }
+
+  }
+  display(){  
+    let current = this.head;  
+    if(this.head == null) {  
+        console.log("List is empty");  
+        return;  
+    }  
+    while(current != null) {  
+        console.log(current.value + " ");  
+        current = current.next;  
+    }
+  }
 
 }
+const test = new Inventory();
+  
+test.insert(2);
+test.insert(1);
+test.insert(10);
+test.insert(8);
+test.insert(7);
+test.display();
+console.log("------------------------------")
+test.sortList()
+test.display()
+
 
 /*
 class App{
@@ -145,11 +210,11 @@ class App{
         y.value = x;
     }
     _returnInventory = () =>{
-        console.log(this._inventory.list())
+        console.log(this._inventory.print())
         
     }
     _returnReverseInventory = () =>{
-        console.log(this._inventory.listRev())
+        console.log(this._inventory.print())
         
     }
     test = () =>{
