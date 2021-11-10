@@ -33,8 +33,27 @@ class Inventory{
     this.head = this.tail = newNode;
     return newNode;
   }
+  remove() {
+    if (this.tail) {
+      this.length--;
+
+      const removedTail = this.tail;
+      const beforeTail = this.tail.previous;
+
+      this.tail = beforeTail;
+      if (this.tail) {
+        this.tail.next = null;
+      } else {
+        this.head = null;
+      }
+
+      return removedTail;
+    }
+    return undefined;
+  }
 
 }
+
 /*
 class App{
     constructor(){
