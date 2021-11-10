@@ -69,9 +69,22 @@ class Inventory{
 
     if (temp.value._id != x)
         return -1;
-    return (pos);
+    return (pos+1);
 }
-productAtPosition(x){ // terrible pero funciona
+findById(x) {
+  let temp = this.head;
+  let pos = 0;
+
+  while (temp.value._id != x && temp.next != null) {
+      pos++;
+      temp = temp.next;
+  }
+
+  if (temp.value._id != x)
+      return -1;
+  return (temp);
+}
+findByPosition(x){ // terrible pero funciona
   let temp = this.head;
   let i = 1;
   while (i != x && temp.next != null) {
@@ -98,18 +111,18 @@ productAtPosition(x){ // terrible pero funciona
     return newNode;
   }
 
-  insertIndex(value, index) {
-    if (index >= this.length) {
-      console.log("Insert index out of bounds");
+  insertPos(value, pos) {
+    if (pos >= this.length) {
+      console.log("Insert position out of bounds");
     }
 
-    if (index === 0) {
+    if (pos === 1) {
       return this.insertAtHead(value);
     }
 
     this.length++;
     let currentNode = this.head;
-    for (let i = 0; i < index; i++) {
+    for (let i = 1; i < pos; i++) {
       currentNode = currentNode.next;
     }
     const previousNode = currentNode.previous;
@@ -121,18 +134,18 @@ productAtPosition(x){ // terrible pero funciona
     return newNode;
   }
 
-  removeAtIndex(index) {
-    if (index >= this.length) {
-      console.log("Remove index out of bounds");
+  removeAtPos(pos) {
+    if (pos >= this.length) {
+      console.log("Remove pos out of bounds");
     }
 
-    if (index === 0) {
+    if (pos === 0) {
       return this.removeAtHead();
     }
 
     this.length--;
     let currentNode = this.head;
-    for (let i = 0; i < index; i++) {
+    for (let i = 1; i < pos; i++) {
       currentNode = currentNode.next;
     }
     const previousNode = currentNode.previous;
@@ -145,13 +158,13 @@ productAtPosition(x){ // terrible pero funciona
     return currentNode;
   }
   removeById(x){
-    let removed = x
     let y = this.search(x);
     if ((y === -1)) {
       return null;
     }
-    this.removeAtIndex(y);
-    return console.log(removed);
+    let removed = this.findByPosition(y).value.info()
+    this.removeAtPos(y);
+    return removed.info;
   }
   removeAtHead() {
     if (this.head) {
