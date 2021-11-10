@@ -75,7 +75,7 @@ class Inventory{
     this.head = this.tail = newNode;
     return newNode;
   }
-  
+
   insertIndex(value, index) {
     if (index >= this.length) {
       throw new Error("Insert index out of bounds");
@@ -97,6 +97,27 @@ class Inventory{
     previousNode.next = newNode;
     currentNode.previous = newNode;
     return newNode;
+  }
+  
+  removeIndex(index) {
+    if (index >= this.length) {
+      throw new Error("Remove index out of bounds");
+    }
+
+    if (index === 0) {
+      return this.removeHead();
+    }
+
+    this.length--;
+    let currentNode = this.head;
+    for (let i = 0; i < index; i++) {
+      currentNode = currentNode.next;
+    }
+    const previousNode = currentNode.previous;
+    const nextNode = currentNode.next;
+    previousNode.next = nextNode;
+    nextNode.previous = previousNode;
+    return currentNode;
   }
 
 }
