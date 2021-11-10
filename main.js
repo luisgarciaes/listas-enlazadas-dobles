@@ -15,8 +15,26 @@ class Product{
         this._totalCost = this._units * this._cost;
         this.next=null;
     }
-    info(){
-        return this._id + " - " + this._name + " " + this._units + " " + this._cost;
+      info(){
+        return this._id + " - " + this._name+ " - " + this._units+ " - " + this._cost+ " - " + this._totalCost
+      }
+      infoDetailed(){
+        return "\nID: " + this._id + "\n Nombre: " + this._name + "\n Unidades: " + this._units + "\n Costo por unidad: " + this._cost + "\n Costo total: " + this._totalCost+"\n-------------" ;
+      }
+      getId(){
+        return this._id;
+      }
+      getName(){
+        return this._name;
+      }
+      getUnits(){
+        return this._units;
+      }
+      getCost(){
+        return this._cost;
+      }
+      getTotalCost(){
+        return this._totalCost;
       }
     
 }
@@ -136,10 +154,10 @@ findByPosition(x){ // terrible pero funciona
 
   removeAtPos(pos) {
     if (pos >= this.length) {
-      console.log("Remove pos out of bounds");
+      return this.remove();
     }
 
-    if (pos === 0) {
+    if (pos === 1) {
       return this.removeAtHead();
     }
 
@@ -148,11 +166,10 @@ findByPosition(x){ // terrible pero funciona
     for (let i = 1; i < pos; i++) {
       currentNode = currentNode.next;
     }
+  
     const previousNode = currentNode.previous;
     const nextNode = currentNode.next;
-    if(previousNode === null && nextNode === null){
-      return -1;
-    }
+ 
     previousNode.next = nextNode;
     nextNode.previous = previousNode;
     return currentNode;
@@ -164,6 +181,7 @@ findByPosition(x){ // terrible pero funciona
     }
     let removed = this.findByPosition(y).value.info()
     this.removeAtPos(y);
+    this.length--
     return removed.info;
   }
   removeAtHead() {
@@ -225,25 +243,6 @@ findByPosition(x){ // terrible pero funciona
   }
 
 }
-/*
-let i=new Inventory();
-let p1=new Product(8,1,1,1,1);
-i.insert(p1);
-p1=new Product(7,1,1,1,1);
-i.insert(p1);
-p1=new Product(5,3,3,3,3);
-i.insert(p1);
-p1=new Product(4,1,1,1,1);
-i.insert(p1);
-p1=new Product(3,1,1,1,1);
-i.insert(p1);
-p1=new Product(10,1,1,1,1);
-i.insert(p1); 
-i.display();
-console.log("------------------------------")
-i.sortList()
-i.display()
-*/
 
 
 class App{
@@ -270,35 +269,88 @@ class App{
         y.value = x;
     }
     _returnInventory = () =>{
+      let consoleText = document.getElementById("changelog")
         this._inventory.sortList();
         this._inventory.display();
+        consoleText.innerHTML = this._inventory.display();
     }
     _returnReverseInventory = () =>{
+      let consoleText = document.getElementById("changelog")
       this._inventory.displayReverse()
+      consoleText.innerHTML = this._inventory.displayReverse();
         
     }
     test = () =>{
-      
-        this._inventory.insert(new Product(2,1,1,1,1))
+  
+        this._inventory.insert(new Product(2,"Cola",1,12))
+  
 
-        this._inventory.insert(new Product(1,1,1,1,1))
+        this._inventory.insert(new Product(1,"Banana",5,2))
 
-        this._inventory.insert(new Product(8,1,1,1,1))
 
-        this._inventory.insert(new Product(7,1,1,1,1))
+        this._inventory.insert(new Product(6,"Patata",10,3))
 
-        this._inventory.insert(new Product(6,1,1,1,1))
 
-        this._inventory.insert(new Product(4,1,1,1,1))
+        this._inventory.insert(new Product(5,"Manzana",2,2))
+
+
+        this._inventory.insert(new Product(4,"Pera",5,2))
+  
+
+        this._inventory.insert(new Product(7,"Zapato",2,100))
+        this._inventory.insert(new Product(3,"Zapato",2,100))
+        this._inventory.insert(new Product(8,"Zapato",2,100))
+        this._inventory.insert(new Product(9,"Zapato",2,100))
+        this._inventory.insert(new Product(10,"Zapato",2,100))
+        this._inventory.insert(new Product(11,"Zapato",2,100))
+        this._inventory.insert(new Product(12,"Zapato",2,100))
+        this._inventory.insert(new Product(13,"Zapato",2,100))
+        this._inventory.insert(new Product(14,"Zapato",2,100))
+        this._inventory.insert(new Product(15,"Zapato",2,100))
+        this._inventory.insert(new Product(16,"Zapato",2,100))
+        this._inventory.insert(new Product(17,"Zapato",2,100))
+        this._inventory.insert(new Product(18,"Zapato",2,100))
+        this._inventory.insert(new Product(19,"Zapato",2,100))
+
+
+        
+
 
         
     }
     
     _addProduct = () => {
-        let consoleText = document.getElementById("changelog")
-        let form =  document.getElementById("form1")
+      let consoleText = document.getElementById("changelog")
+      let form =  document.getElementById("form1")
+      if (this._inventory.length >= 20) {
+        console.log("The inventory is full, please remove an item and try again.")
+        consoleText.innerHTML = "The inventory is full, please remove an item and try again."
+        return;
+      }
+
+
         let product = new Product(document.getElementById("id").value,document.getElementById("name").value
         ,document.getElementById("units").value,document.getElementById("cost").value);
+        switch ("") {
+          case product.getId():
+            consoleText.innerHTML ="Fill all fields."
+            return console.log("Fill all fields.")
+
+            case product.getName():
+            consoleText.innerHTML ="Fill all fields."
+            return console.log("Fill all fields.")
+
+            case product.getUnits():
+              consoleText.innerHTML ="Fill all fields."
+            return console.log("Fill all fields.")
+
+            case product.getCost():
+              consoleText.innerHTML ="Fill all fields."
+            return console.log("Fill all fields.")
+
+          default:
+            break;
+        }
         let y = this._inventory.findById(product._id)
 
         if (y === -1) { 
@@ -317,15 +369,17 @@ class App{
         let consoleText = document.getElementById("changelog")
         let form = document.getElementById("form2")
         let x = document.getElementById("findRemove").value;
-        let y = this._inventory.delete(x)
-        if (y == null) {
+        let y = this._inventory.findById(x)
+        if (y == -1) {
             console.log("The product with the ID '" + x + "' does not exist.")
             consoleText.innerHTML ="The product with the ID '" + x + "' does not exist."
+            return false;
         }else{
-            console.log("The product '" + y.info() + "' has been deleted.")
-            consoleText.innerHTML ="The product '" + y.info() + "' has been deleted."
-            this._inventory.delete(x)
+            console.log(y.value.info())
+            consoleText.innerHTML ="'"+y.value.info()+"' was removed"
+            this._inventory.removeById(x)
             form.reset();
+            return true;
         }
 
     };
@@ -338,8 +392,9 @@ class App{
             consoleText.innerHTML ="The product with the ID '" + x + "' does not exist."
             
         }else{
-            console.log(y.value.info())
-            consoleText.innerHTML = y.value.info()
+            console.log(y.value.infoDetailed())
+            consoleText.innerHTML = 
+            "ID: "+ y.value.getId()+"<br>" + "NAME: " + y.value.getName()+"<br>" + "UNITS: " + y.value.getUnits()+"<br>" + "COST: "+y.value.getCost() +"<br>" + "TOTAL COST: "+y.value.getTotalCost();
         }
 
     };
